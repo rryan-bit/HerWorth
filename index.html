@@ -169,3 +169,13 @@
 <script src="app.js"></script>
 </body>
 </html>
+<script type="module">
+  import { signUp, login, monitorAuth } from './firebase.js';
+
+  // Redirect logged-in users to dashboard
+  monitorAuth('dashboard.html');
+
+  // Expose functions to buttons
+  window.signUp = signUp;
+  window.login = (email, password) => login(email, password, 'dashboard.html');
+</script>
