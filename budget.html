@@ -157,3 +157,9 @@
 <script src="budget.js"></script>
 </body>
 </html>
+<script type="module">
+  import { monitorAuth } from './firebase.js';
+
+  // Redirect to index.html if not logged in
+  monitorAuth(null, 'index.html');
+</script>
