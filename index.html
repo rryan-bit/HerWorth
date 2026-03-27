@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HerWorth — Your Money, Your Power</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="auth-page">
+
+<div class="auth-bg">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+
+<div class="auth-container">
+  <!-- BRAND SIDE -->
+  <div class="auth-brand">
+    <div class="brand-inner">
+      <div class="logo">
+        <span class="logo-mark">✦</span>
+        <span class="logo-text">HerWorth</span>
+      </div>
+      <h1 class="brand-headline">Your money,<br><em>finally</em> working<br>for you.</h1>
+      <p class="brand-sub">Track spending, set goals, grow your wealth — all in one beautifully simple place.</p>
+      <div class="brand-stats">
+        <div class="brand-stat">
+          <span class="stat-num">$2.4M</span>
+          <span class="stat-lbl">tracked this month</span>
+        </div>
+        <div class="brand-stat">
+          <span class="stat-num">12k+</span>
+          <span class="stat-lbl">women empowered</span>
+        </div>
+        <div class="brand-stat">
+          <span class="stat-num">98%</span>
+          <span class="stat-lbl">feel more in control</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUTH FORM SIDE -->
+  <div class="auth-form-side">
+    <div class="auth-card">
+      <!-- TABS -->
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="loginTab" onclick="switchTab('login')">Sign In</button>
+        <button class="auth-tab" id="signupTab" onclick="switchTab('signup')">Create Account</button>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <div id="loginForm" class="auth-form-section">
+        <div class="form-header">
+          <h2>Welcome back ✦</h2>
+          <p>Sign in to your HerWorth account</p>
+        </div>
+
+        <div id="loginError" class="form-error" style="display:none;"></div>
+
+        <div class="field-group">
+          <label>Email address</label>
+          <div class="input-wrap">
+            <span class="input-icon">✉</span>
+            <input type="email" id="loginEmail" placeholder="you@example.com" autocomplete="email">
+          </div>
+          <span class="field-err" id="loginEmailErr"></span>
+        </div>
+
+        <div class="field-group">
+          <label>Password</label>
+          <div class="input-wrap">
+            <span class="input-icon">🔒</span>
+            <input type="password" id="loginPassword" placeholder="Your password" autocomplete="current-password">
+            <button class="toggle-eye" type="button" onclick="togglePass('loginPassword', this)">👁</button>
+          </div>
+          <span class="field-err" id="loginPassErr"></span>
+        </div>
+
+        <div class="form-row-between">
+          <label class="check-label">
+            <input type="checkbox" id="rememberMe"> Remember me
+          </label>
+          <a href="#" class="link-soft">Forgot password?</a>
+        </div>
+
+        <button class="btn-primary btn-full" onclick="handleLogin()">
+          <span class="btn-label">Sign In</span>
+          <span class="btn-spinner" style="display:none;">◌</span>
+        </button>
+
+        <div class="divider"><span>or continue with</span></div>
+
+        <button class="btn-google" onclick="handleGoogleAuth()">
+          <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Continue with Google
+        </button>
+      </div>
+
+      <!-- SIGNUP FORM -->
+      <div id="signupForm" class="auth-form-section" style="display:none;">
+        <div class="form-header">
+          <h2>Join HerWorth ✦</h2>
+          <p>Start your financial journey today</p>
+        </div>
+
+        <div id="signupError" class="form-error" style="display:none;"></div>
+
+        <div class="form-row-2">
+          <div class="field-group">
+            <label>First name</label>
+            <input type="text" id="signupFirst" placeholder="Jane">
+            <span class="field-err" id="signupFirstErr"></span>
+          </div>
+          <div class="field-group">
+            <label>Last name</label>
+            <input type="text" id="signupLast" placeholder="Smith">
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>Email address</label>
+          <div class="input-wrap">
+            <span class="input-icon">✉</span>
+            <input type="email" id="signupEmail" placeholder="you@example.com">
+          </div>
+          <span class="field-err" id="signupEmailErr"></span>
+        </div>
+
+        <div class="field-group">
+          <label>Password</label>
+          <div class="input-wrap">
+            <span class="input-icon">🔒</span>
+            <input type="password" id="signupPassword" placeholder="Create a strong password" oninput="checkStrength(this.value)">
+            <button class="toggle-eye" type="button" onclick="togglePass('signupPassword', this)">👁</button>
+          </div>
+          <div class="strength-bar" id="strengthBar" style="display:none;">
+            <div class="strength-fill" id="strengthFill"></div>
+          </div>
+          <span class="strength-label" id="strengthLabel"></span>
+          <span class="field-err" id="signupPassErr"></span>
+        </div>
+
+        <div class="field-group">
+          <label class="check-label">
+            <input type="checkbox" id="agreeTerms">
+            I agree to the <a href="#" class="link-soft">Terms</a> and <a href="#" class="link-soft">Privacy Policy</a>
+          </label>
+          <span class="field-err" id="signupTermsErr"></span>
+        </div>
+
+        <button class="btn-primary btn-full" onclick="handleSignup()">
+          <span class="btn-label">Create Account</span>
+          <span class="btn-spinner" style="display:none;">◌</span>
+        </button>
+
+        <div class="divider"><span>or continue with</span></div>
+        <button class="btn-google" onclick="handleGoogleAuth()">
+          <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Continue with Google
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

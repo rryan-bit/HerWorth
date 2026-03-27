@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HerWorth — Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="app-page">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo"><span class="logo-mark">✦</span><span class="logo-text">HerWorth</span></div>
+  <nav class="sidebar-nav">
+    <a href="dashboard.html" class="nav-item"><span class="nav-icon">◈</span> Dashboard</a>
+    <a href="expenses.html" class="nav-item"><span class="nav-icon">◉</span> Expenses</a>
+    <a href="calendar.html" class="nav-item"><span class="nav-icon">◻</span> Calendar</a>
+    <a href="budget.html" class="nav-item"><span class="nav-icon">◎</span> Budget & Goals</a>
+    <a href="accounts.html" class="nav-item"><span class="nav-icon">⬡</span> Accounts</a>
+    <a href="media.html" class="nav-item"><span class="nav-icon">❋</span> Media</a>
+    <a href="profile.html" class="nav-item active"><span class="nav-icon">◌</span> Profile</a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="sidebar-user"><div class="user-avatar" id="userAvatar">J</div><div class="user-info"><span class="user-name" id="userName">Jane</span><span class="user-email" id="userEmail">jane@email.com</span></div></div>
+    <button class="btn-logout" onclick="logout()">Sign out</button>
+  </div>
+</aside>
+
+<div class="mobile-topbar">
+  <div class="logo"><span class="logo-mark">✦</span><span class="logo-text">HerWorth</span></div>
+  <button class="hamburger" onclick="toggleSidebar()">☰</button>
+</div>
+
+<main class="main-content">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Profile ✦</h1>
+      <p class="page-sub">Manage your account settings</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn-dark-toggle" onclick="toggleDark()">◑</button>
+    </div>
+  </div>
+
+  <div class="profile-layout">
+
+    <!-- AVATAR CARD -->
+    <div class="card profile-avatar-card">
+      <div class="profile-avatar-large" id="profileAvatarLarge">J</div>
+      <h2 class="profile-name" id="profileNameDisplay">Jane Smith</h2>
+      <p class="profile-email-display" id="profileEmailDisplay">jane@email.com</p>
+      <p class="profile-joined">Member since <span id="profileJoined">March 2026</span></p>
+      <div class="profile-stats">
+        <div class="profile-stat"><span id="psTxCount">0</span><small>Transactions</small></div>
+        <div class="profile-stat"><span id="psGoals">0</span><small>Goals</small></div>
+        <div class="profile-stat"><span id="psAccounts">0</span><small>Accounts</small></div>
+      </div>
+    </div>
+
+    <!-- SETTINGS CARDS -->
+    <div class="profile-settings">
+
+      <!-- PERSONAL INFO -->
+      <div class="card settings-card">
+        <h3>Personal Information</h3>
+        <div class="form-row-2">
+          <div class="field-group">
+            <label>First Name</label>
+            <input type="text" id="profFirst" placeholder="First name">
+          </div>
+          <div class="field-group">
+            <label>Last Name</label>
+            <input type="text" id="profLast" placeholder="Last name">
+          </div>
+        </div>
+        <div class="field-group">
+          <label>Email Address</label>
+          <input type="email" id="profEmail" placeholder="your@email.com">
+        </div>
+        <div class="form-success" id="profileSuccess" style="display:none;">✓ Profile updated!</div>
+        <button class="btn-primary btn-sm" onclick="saveProfile()">Save Changes</button>
+      </div>
+
+      <!-- CHANGE PASSWORD -->
+      <div class="card settings-card">
+        <h3>Change Password</h3>
+        <div class="field-group">
+          <label>Current Password</label>
+          <div class="input-wrap">
+            <span class="input-icon">🔒</span>
+            <input type="password" id="currentPass" placeholder="Current password">
+            <button class="toggle-eye" type="button" onclick="togglePass('currentPass', this)">👁</button>
+          </div>
+        </div>
+        <div class="field-group">
+          <label>New Password</label>
+          <div class="input-wrap">
+            <span class="input-icon">🔒</span>
+            <input type="password" id="newPass" placeholder="New password" oninput="checkStrength(this.value)">
+            <button class="toggle-eye" type="button" onclick="togglePass('newPass', this)">👁</button>
+          </div>
+          <div class="strength-bar" id="strengthBar" style="display:none;"><div class="strength-fill" id="strengthFill"></div></div>
+          <span class="strength-label" id="strengthLabel"></span>
+        </div>
+        <div class="form-success" id="passSuccess" style="display:none;">✓ Password updated!</div>
+        <div class="form-error" id="passError" style="display:none;"></div>
+        <button class="btn-primary btn-sm" onclick="changePassword()">Update Password</button>
+      </div>
+
+      <!-- PREFERENCES -->
+      <div class="card settings-card">
+        <h3>Preferences</h3>
+        <div class="field-group">
+          <label>Currency</label>
+          <select id="prefCurrency">
+            <option value="AUD">🇦🇺 AUD — Australian Dollar</option>
+            <option value="USD">🇺🇸 USD — US Dollar</option>
+            <option value="GBP">🇬🇧 GBP — British Pound</option>
+            <option value="EUR">🇪🇺 EUR — Euro</option>
+            <option value="NZD">🇳🇿 NZD — New Zealand Dollar</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label>Dark Mode</label>
+          <div class="toggle-row">
+            <span>Enable dark mode</span>
+            <label class="toggle-switch">
+              <input type="checkbox" id="darkModeToggle" onchange="toggleDarkFromCheckbox(this)">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+        <button class="btn-primary btn-sm" onclick="savePreferences()">Save Preferences</button>
+      </div>
+
+      <!-- DANGER ZONE -->
+      <div class="card settings-card settings-card--danger">
+        <h3>Danger Zone</h3>
+        <p>Clear all your data or delete your account. These actions cannot be undone.</p>
+        <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:1rem;">
+          <button class="btn-danger btn-sm" onclick="clearAllData()">Clear All Data</button>
+          <button class="btn-danger btn-sm" onclick="deleteAccount()">Delete Account</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<script src="app.js"></script>
+<script src="profile.js"></script>
+</body>
+</html>
