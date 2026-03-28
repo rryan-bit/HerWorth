@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HerWorth — Budget & Goals</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="app-page">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo"><span class="logo-mark">✦</span><span class="logo-text">HerWorth</span></div>
+  <nav class="sidebar-nav">
+    <a href="dashboard.html" class="nav-item"><span class="nav-icon">◈</span> Dashboard</a>
+    <a href="expenses.html" class="nav-item"><span class="nav-icon">◉</span> Expenses</a>
+    <a href="calendar.html" class="nav-item"><span class="nav-icon">◻</span> Calendar</a>
+    <a href="budget.html" class="nav-item active"><span class="nav-icon">◎</span> Budget & Goals</a>
+    <a href="accounts.html" class="nav-item"><span class="nav-icon">⬡</span> Accounts</a>
+    <a href="media.html" class="nav-item"><span class="nav-icon">❋</span> Media</a>
+    <a href="profile.html" class="nav-item"><span class="nav-icon">◌</span> Profile</a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="sidebar-user"><div class="user-avatar" id="userAvatar">J</div><div class="user-info"><span class="user-name" id="userName">Jane</span><span class="user-email" id="userEmail">jane@email.com</span></div></div>
+    <button class="btn-logout" onclick="logout()">Sign out</button>
+  </div>
+</aside>
+
+<div class="mobile-topbar">
+  <div class="logo"><span class="logo-mark">✦</span><span class="logo-text">HerWorth</span></div>
+  <button class="hamburger" onclick="toggleSidebar()">☰</button>
+</div>
+
+<main class="main-content">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Budget & Goals ✦</h1>
+      <p class="page-sub">Set limits, track progress, grow your savings</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn-dark-toggle" onclick="toggleDark()">◑</button>
+      <button class="btn-primary btn-sm" onclick="openBudgetModal()">+ Set Budget</button>
+    </div>
+  </div>
+
+  <!-- BUDGETS -->
+  <div class="section-title-row">
+    <h2>Monthly Budgets</h2>
+    <p class="section-sub">Spending limits per category</p>
+  </div>
+  <div class="budgets-grid" id="budgetsGrid">
+    <div class="empty-state card">No budgets set yet. Click <strong>+ Set Budget</strong> to add one.</div>
+  </div>
+
+  <!-- SAVINGS GOALS -->
+  <div class="section-title-row" style="margin-top:2.5rem;">
+    <h2>Savings Goals</h2>
+    <p class="section-sub">Work toward what matters</p>
+    <button class="btn-outline btn-sm" onclick="openGoalModal()">+ Add Goal</button>
+  </div>
+  <div class="goals-grid" id="goalsGrid">
+    <div class="empty-state card">No savings goals yet. Click <strong>+ Add Goal</strong> to start saving toward something.</div>
+  </div>
+</main>
+
+<!-- BUDGET MODAL -->
+<div class="modal-overlay" id="budgetModal" style="display:none;" onclick="closeModalOutside(event,'budgetModal')">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="budgetModalTitle">Set Budget Limit</h2>
+      <button class="modal-close" onclick="closeBudgetModal()">✕</button>
+    </div>
+    <input type="hidden" id="editBudgetId">
+    <div class="field-group">
+      <label>Category *</label>
+      <select id="budgetCategory">
+        <option value="">Select category…</option>
+        <option value="Food">🍽 Food</option>
+        <option value="Drinks">🍹 Drinks</option>
+        <option value="Transport">🚗 Transport</option>
+        <option value="Shopping">🛍 Shopping</option>
+        <option value="Furniture">🛋 Furniture</option>
+        <option value="Bills">💡 Bills</option>
+        <option value="Health">💊 Health</option>
+        <option value="Entertainment">🎬 Entertainment</option>
+        <option value="Beauty">💄 Beauty</option>
+        <option value="Travel">✈️ Travel</option>
+        <option value="Other">📦 Other</option>
+      </select>
+      <span class="field-err" id="budgetCategoryErr"></span>
+    </div>
+    <div class="field-group">
+      <label>Monthly Limit *</label>
+      <div class="input-wrap">
+        <span class="input-icon">$</span>
+        <input type="number" id="budgetLimit" placeholder="e.g. 500" min="1">
+      </div>
+      <span class="field-err" id="budgetLimitErr"></span>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-outline" onclick="closeBudgetModal()">Cancel</button>
+      <button class="btn-primary" onclick="saveBudget()">Save Budget</button>
+    </div>
+  </div>
+</div>
+
+<!-- GOAL MODAL -->
+<div class="modal-overlay" id="goalModal" style="display:none;" onclick="closeModalOutside(event,'goalModal')">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="goalModalTitle">Add Savings Goal</h2>
+      <button class="modal-close" onclick="closeGoalModal()">✕</button>
+    </div>
+    <input type="hidden" id="editGoalId">
+    <div class="field-group">
+      <label>Goal Name *</label>
+      <input type="text" id="goalName" placeholder="e.g. Emergency Fund, Holiday, New Car">
+      <span class="field-err" id="goalNameErr"></span>
+    </div>
+    <div class="field-group">
+      <label>Target Amount *</label>
+      <div class="input-wrap">
+        <span class="input-icon">$</span>
+        <input type="number" id="goalTarget" placeholder="e.g. 5000" min="1">
+      </div>
+      <span class="field-err" id="goalTargetErr"></span>
+    </div>
+    <div class="field-group">
+      <label>Amount Saved So Far</label>
+      <div class="input-wrap">
+        <span class="input-icon">$</span>
+        <input type="number" id="goalSaved" placeholder="0" min="0">
+      </div>
+    </div>
+    <div class="field-group">
+      <label>Emoji Icon</label>
+      <div class="emoji-picker">
+        <span class="emoji-opt selected" onclick="selectEmoji(this, '🏖')">🏖</span>
+        <span class="emoji-opt" onclick="selectEmoji(this, '🚗')">🚗</span>
+        <span class="emoji-opt" onclick="selectEmoji(this, '🏠')">🏠</span>
+        <span class="emoji-opt" onclick="selectEmoji(this, '💍')">💍</span>
+        <span class="emoji-opt" onclick="selectEmoji(this, '📱')">📱</span>
+        <span class="emoji-opt" onclick="selectEmoji(this, '🎓')">🎓</span>
+        <span class="emoji-opt" onclick="selectEmoji(this, '👶')">👶</span>
+        <span class="emoji-opt" onclick="selectEmoji(this, '💰')">💰</span>
+        <span class="emoji-opt" onclick="selectEmoji(this, '✈️')">✈️</span>
+        <span class="emoji-opt" onclick="selectEmoji(this, '🌸')">🌸</span>
+      </div>
+      <input type="hidden" id="goalEmoji" value="🏖">
+    </div>
+    <div class="modal-footer">
+      <button class="btn-outline" onclick="closeGoalModal()">Cancel</button>
+      <button class="btn-primary" onclick="saveGoal()">Save Goal</button>
+    </div>
+  </div>
+</div>
+
+<!-- Firebase Compat SDK (works as regular scripts, no ES modules needed) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+  firebase.initializeApp({
+    apiKey:            "AIzaSyBwE0PN1VmfgCYaD5wZGQEcYoVa-nSCAVQ",
+    authDomain:        "herworth-6a0b0.firebaseapp.com",
+    projectId:         "herworth-6a0b0",
+    storageBucket:     "herworth-6a0b0.firebasestorage.app",
+    messagingSenderId: "453015159303",
+    appId:             "1:453015159303:web:9d309b3949166c980860a2",
+    measurementId:     "G-5ED577JSQE"
+  });
+</script>
+<script src="app.js"></script>
+<script src="budget.js"></script>
+</body>
+</html>
